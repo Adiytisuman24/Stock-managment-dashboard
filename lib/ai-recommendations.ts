@@ -1,4 +1,4 @@
-// AI-powered stock recommendation engine
+
 import { Stock } from '@/types/portfolio';
 
 export interface AIRecommendation {
@@ -20,11 +20,11 @@ export function generateAIRecommendation(stock: Stock): AIRecommendation {
     stage2: stock.stage2 || false
   };
 
-  // AI Decision Logic
+  
   let score = 0;
   let reasons: string[] = [];
 
-  // Performance Analysis
+  
   if (metrics.gainLossPercent > 50) {
     score -= 2;
     reasons.push('High gains suggest overvaluation');
@@ -36,7 +36,7 @@ export function generateAIRecommendation(stock: Stock): AIRecommendation {
     reasons.push('Significant losses indicate fundamental issues');
   }
 
-  // Valuation Metrics
+
   if (metrics.peRatio > 30) {
     score -= 1;
     reasons.push('High P/E ratio indicates overvaluation');
@@ -53,7 +53,7 @@ export function generateAIRecommendation(stock: Stock): AIRecommendation {
     reasons.push('Reasonable P/B ratio');
   }
 
-  // Financial Health
+
   if (metrics.debtToEquity > 1) {
     score -= 2;
     reasons.push('High debt levels are concerning');
@@ -78,7 +78,7 @@ export function generateAIRecommendation(stock: Stock): AIRecommendation {
     reasons.push('Low profit margins');
   }
 
-  // Cash Flow Analysis
+ 
   if (metrics.cfoToEbitda > 0.8) {
     score += 1;
     reasons.push('Strong cash flow conversion');
@@ -92,7 +92,7 @@ export function generateAIRecommendation(stock: Stock): AIRecommendation {
     reasons.push('Cash flow exceeds reported profits');
   }
 
-  // Stage-2 Analysis
+
   if (metrics.stage2) {
     score += 2;
     reasons.push('Stock is in Stage-2 uptrend');
@@ -101,7 +101,7 @@ export function generateAIRecommendation(stock: Stock): AIRecommendation {
     reasons.push('Stock not in favorable Stage-2 pattern');
   }
 
-  // Sector-specific adjustments
+
   if (stock.sector === 'Information Technology') {
     if (metrics.peRatio < 25) score += 1;
   } else if (stock.sector === 'Financial Sector') {
@@ -110,7 +110,7 @@ export function generateAIRecommendation(stock: Stock): AIRecommendation {
     if (metrics.debtToEquity < 0.5) score += 1;
   }
 
-  // Final Decision
+ 
   let action: 'exit' | 'hold' | 'add';
   let confidence: number;
 
@@ -141,10 +141,10 @@ export function generateAIRecommendation(stock: Stock): AIRecommendation {
   };
 }
 
-// Generate enhanced financial metrics (simulated for demo)
+
 export function generateEnhancedMetrics(stock: Stock): Partial<Stock> {
   const basePrice = stock.currentPrice;
-  const marketCapBase = basePrice * 10000000; // Simulated shares outstanding
+  const marketCapBase = basePrice * 10000000; 
 
   return {
     marketCap: marketCapBase + (Math.random() - 0.5) * marketCapBase * 0.1,
