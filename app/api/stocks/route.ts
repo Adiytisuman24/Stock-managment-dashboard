@@ -2,10 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getAlphaVantageClient } from '@/lib/alpha-vantage-client';
 
 export const dynamic = 'force-dynamic';
-
-// Cache to prevent excessive API calls
+s
 let cache: { data: any; timestamp: number } | null = null;
-const CACHE_DURATION = 60000; // 1 minute cache
+const CACHE_DURATION = 60000;
 
 export async function GET(request: NextRequest) {
   try {
@@ -18,7 +17,7 @@ export async function GET(request: NextRequest) {
     
     const symbols = symbolsParam.split(',').map(s => s.trim()).filter(Boolean);
     
-    // Check cache
+   
     if (cache && Date.now() - cache.timestamp < CACHE_DURATION) {
       console.log('Returning cached stock data');
       return NextResponse.json(cache.data);
@@ -29,20 +28,20 @@ export async function GET(request: NextRequest) {
     
     console.log(`Fetching stock data for ${symbols.length} symbols from Alpha Vantage...`);
     
-    // Process symbols with proper rate limiting
+   
     for (let i = 0; i < symbols.length; i++) {
       const symbol = symbols[i];
       
       try {
         console.log(`Fetching data for ${symbol} (${i + 1}/${symbols.length})`);
         
-        // Get quote data
+       
         const quote = await alphaVantageClient.getQuote(symbol);
         
         if (quote) {
-          // Get company overview for additional metrics (less frequently)
+         
           let overview = null;
-          if (i < 3) { // Only fetch overview for first 3 stocks to avoid rate limits
+          if (i < 3) { 
             try {
               overview = await alphaVantageClient.getCompanyOverview(symbol);
             } catch (overviewError) {
@@ -79,7 +78,7 @@ export async function GET(request: NextRequest) {
       } catch (error) {
         console.warn(`Alpha Vantage failed for ${symbol}:`, error);
         
-        // Use fallback data
+        
         const fallbackData = alphaVantageClient.generateFallbackData(symbol);
         combinedData[symbol] = {
           symbol,
@@ -106,7 +105,7 @@ export async function GET(request: NextRequest) {
       }
     }
     
-    // Update cache
+   
     cache = {
       data: combinedData,
       timestamp: Date.now()
