@@ -35,10 +35,10 @@ export default function Dashboard() {
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const [autoRefresh, setAutoRefresh] = useState(true);
 
-  // Sample portfolio data based on the Excel file
+ 
   const initializePortfolio = useCallback(() => {
     const sampleStocks: Stock[] = [
-      // Financial Sector
+      
       {
         id: '1',
         name: 'HDFC Bank',
@@ -93,7 +93,7 @@ export default function Dashboard() {
         earnings: '₹38,000 Cr',
         lastUpdated: new Date()
       },
-      // Technology Sector
+      
       {
         id: '4',
         name: 'Affle India',
@@ -130,7 +130,7 @@ export default function Dashboard() {
         earnings: '₹2,800 Cr',
         lastUpdated: new Date()
       },
-      // Consumer Sector
+     
       {
         id: '6',
         name: 'DMart',
@@ -167,7 +167,7 @@ export default function Dashboard() {
         earnings: '₹8,200 Cr',
         lastUpdated: new Date()
       },
-      // Power Sector
+      
       {
         id: '8',
         name: 'Tata Power',
@@ -204,7 +204,7 @@ export default function Dashboard() {
         earnings: '₹850 Cr',
         lastUpdated: new Date()
       },
-      // Others
+    
       {
         id: '10',
         name: 'Polycab India',
@@ -225,21 +225,21 @@ export default function Dashboard() {
       }
     ];
 
-    // Calculate portfolio totals
+    
     const totalInvestment = sampleStocks.reduce((sum, stock) => sum + stock.investment, 0);
     const currentValue = sampleStocks.reduce((sum, stock) => sum + stock.presentValue, 0);
     const totalGainLoss = currentValue - totalInvestment;
     const totalGainLossPercent = (totalGainLoss / totalInvestment) * 100;
 
-    // Update portfolio percentages
+   
     sampleStocks.forEach(stock => {
       stock.portfolioPercent = (stock.investment / totalInvestment) * 100;
       
-      // Generate enhanced financial metrics
+    
       const enhancedMetrics = generateEnhancedMetrics(stock);
       Object.assign(stock, enhancedMetrics);
       
-      // Generate AI recommendation
+      
       const aiRec = generateAIRecommendation(stock);
       stock.aiRecommendation = aiRec.action;
       stock.aiRecommendationReason = aiRec.reason;
@@ -280,7 +280,7 @@ export default function Dashboard() {
         throw new Error('Invalid response format');
       }
       
-      // Update stocks with new data
+      
       const updatedStocks = portfolio.stocks.map(stock => {
         const newData = stockData[stock.symbol];
         if (newData) {
@@ -300,7 +300,6 @@ export default function Dashboard() {
             lastUpdated: new Date()
           };
           
-          // Update AI recommendation based on new data
           const aiRec = generateAIRecommendation(updatedStock);
           updatedStock.aiRecommendation = aiRec.action;
           updatedStock.aiRecommendationReason = aiRec.reason;
@@ -310,7 +309,6 @@ export default function Dashboard() {
         return stock;
       });
 
-      // Recalculate portfolio totals
       const totalInvestment = updatedStocks.reduce((sum, stock) => sum + stock.investment, 0);
       const currentValue = updatedStocks.reduce((sum, stock) => sum + stock.presentValue, 0);
       const totalGainLoss = currentValue - totalInvestment;
@@ -333,7 +331,6 @@ export default function Dashboard() {
     }
   }, [portfolio.stocks]);
 
-  // Auto-refresh every 60 seconds
   useEffect(() => {
     if (autoRefresh && portfolio.stocks.length > 0) {
       const interval = setInterval(fetchStockData, 60000);
@@ -341,11 +338,11 @@ export default function Dashboard() {
     }
   }, [autoRefresh, fetchStockData, portfolio.stocks.length, loading]);
 
-  // Initialize portfolio on component mount
+ 
   useEffect(() => {
     initializePortfolio();
     
-    // Fetch initial stock data after a short delay
+    
     const timer = setTimeout(() => {
       fetchStockData();
     }, 1000);
@@ -353,7 +350,6 @@ export default function Dashboard() {
     return () => clearTimeout(timer);
   }, [initializePortfolio]);
 
-  // Generate sector summaries
   const getSectorSummaries = (): SectorSummaryType[] => {
     const sectorMap = new Map<string, SectorSummaryType>();
 
@@ -377,7 +373,6 @@ export default function Dashboard() {
       }
     });
 
-    // Calculate percentages
     const sectors = Array.from(sectorMap.values());
     sectors.forEach(sector => {
       sector.gainLossPercent = (sector.gainLoss / sector.totalInvestment) * 100;
@@ -387,7 +382,7 @@ export default function Dashboard() {
     return sectors.sort((a, b) => b.currentValue - a.currentValue);
   };
 
-  // Stock recommendations data
+  
   const stockRecommendations: StockRecommendation[] = [
     { stock: 'KPIT Tech', gainPercent: 89.47, remarks: 'High return, but now overvalued. Consider partial profit booking.', action: 'book-profit' },
     { stock: 'Polycab', gainPercent: 80.0, remarks: 'Excellent growth and fundamentals. Continue to hold/add on dips.', action: 'hold' },
@@ -401,7 +396,6 @@ export default function Dashboard() {
     { stock: 'DMart', gainPercent: -7.89, remarks: 'Valuation too high; Exit. Better FMCG plays exist.', action: 'exit' }
   ];
 
-  // Sector allocation recommendations
   const sectorAllocations: SectorAllocation[] = [
     { sector: 'Financial Sector', currentAllocation: 25, idealAllocation: '30–35% (reduce small caps)' },
     { sector: 'Information Technology', currentAllocation: 28, idealAllocation: '20–25% (consolidate winners only)' },
@@ -468,7 +462,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Live Data Info */}
+        
         <Card className="mb-6 bg-green-50 border-green-200">
           <CardContent className="pt-6">
             <div className="flex items-start gap-3">
@@ -484,7 +478,7 @@ export default function Dashboard() {
           </CardContent>
         </Card>
 
-        {/* Error State */}
+      
         {error && (
           <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2">
             <AlertTriangle className="h-4 w-4 text-red-600" />
@@ -492,7 +486,7 @@ export default function Dashboard() {
           </div>
         )}
 
-        {/* Last Updated */}
+        
         {lastUpdated && (
           <div className="mb-6 text-sm text-gray-500 flex items-center gap-2">
             <RefreshCw className="h-4 w-4" />
@@ -501,15 +495,15 @@ export default function Dashboard() {
           </div>
         )}
 
-        {/* Portfolio Stats */}
+       
         <PortfolioStats portfolio={portfolio} loading={loading} />
 
-        {/* Sector Summary */}
+       
         <div className="mb-8">
           <SectorSummary stocks={portfolio.stocks} loading={loading} />
         </div>
 
-        {/* Sector Analysis */}
+    
         <div className="mb-8">
           <SectorAnalysis 
             sectorSummaries={getSectorSummaries()}
@@ -518,12 +512,12 @@ export default function Dashboard() {
           />
         </div>
 
-        {/* Portfolio Table */}
+     
         <div className="mb-8">
           <PortfolioTable stocks={portfolio.stocks} loading={loading} />
         </div>
 
-        {/* Disclaimer */}
+      
         <div className="bg-gray-100 border border-gray-300 rounded-lg p-4">
           <p className="text-sm text-gray-700">
             <strong>Disclaimer:</strong> Stock prices and financial data are provided by Yahoo finance and  google finance API for informational purposes only. 
