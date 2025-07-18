@@ -50,7 +50,7 @@ export default function PortfolioStats({ portfolio, loading }: PortfolioStatsPro
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-      {/* Total Investment */}
+      
       <Card>
         <CardHeader className="pb-3">
           <CardTitle className="text-sm font-medium text-gray-600 flex items-center">
@@ -68,7 +68,7 @@ export default function PortfolioStats({ portfolio, loading }: PortfolioStatsPro
         </CardContent>
       </Card>
 
-      {/* Current Value */}
+      
       <Card>
         <CardHeader className="pb-3">
           <CardTitle className="text-sm font-medium text-gray-600 flex items-center">
@@ -86,7 +86,7 @@ export default function PortfolioStats({ portfolio, loading }: PortfolioStatsPro
         </CardContent>
       </Card>
 
-      {/* Total Gain/Loss */}
+      
       <Card>
         <CardHeader className="pb-3">
           <CardTitle className="text-sm font-medium text-gray-600 flex items-center">
@@ -113,7 +113,7 @@ export default function PortfolioStats({ portfolio, loading }: PortfolioStatsPro
         </CardContent>
       </Card>
 
-      {/* Day's Performance */}
+    
       <Card>
         <CardHeader className="pb-3">
           <CardTitle className="text-sm font-medium text-gray-600 flex items-center">
