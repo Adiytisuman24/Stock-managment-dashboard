@@ -9,13 +9,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'No file uploaded' }, { status: 400 });
     }
 
-    // In a real implementation, you would:
-    // 1. Parse the Excel file using libraries like xlsx
-    // 2. Validate the data structure
-    // 3. Store in database
-    // 4. Return the parsed portfolio data
-
-    // For demonstration, returning a success response
+   
     return NextResponse.json({
       message: 'File uploaded successfully',
       filename: file.name,
