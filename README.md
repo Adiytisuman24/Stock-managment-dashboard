@@ -118,7 +118,7 @@ Navigate to [http://localhost:3000](http://localhost:3000)
 ```
 
 ## 🔌 API Integration
-
+## API keys are already added so u dont need to create one unless the credits with serp api has been gone due to free credits given by google finance api keys.
 ### SerpAPI Google Finance Integration
 ```typescript
 import { getSerpApiClient } from '@/lib/serpapi-client';
@@ -299,6 +299,16 @@ For support and questions:
 - Review the documentation
 - Ensure all dependencies are properly installed
 
----
+---Images given :
+<img width="1877" height="938" alt="Screenshot 2025-07-18 114241" src="https://github.com/user-attachments/assets/a1e923c2-6929-4ec4-a36f-9f98963aae6c" />
+<img width="1911" height="1026" alt="Screenshot 2025-<img width="1919" height="1025" alt="Screenshot 2025-07-18 114308" src="https://github.com/user-attachments/assets/6ab1a6e4-0a65-4542-b2c4-50f5a3dacc97" />
+07-18 114258" src="https://github.com/user-attachments/assets/2a50ac71-4ec1-46e3-8222-dbbd8c89b22f" />
+
+<img width="1916" height="1030" alt="Screenshot 2025-07-18 114317" src="https://github.com/user-attachments/assets/7afd648a-875f-4aa3-a02e-cea4097aa52f" />
+<img width="1914" height="990" alt="Screenshot 2025-07-18 114327" src="https://github.com/user-attach<img width="1919" height="1025" alt="Screenshot 2025-07-18 114308" src="https://github.com/user-attachments/assets/a3c1d389-9f63-4c7a-b014-88498ddc792d" />
+ments/assets/cc80fb74-5581-4b9b-abc6-51cfb825d95c" />
+<img width="1910" height="1017" alt="Screenshot 2025-07-18 114335" src="https://github.com/user-attachments/assets/988bbd72-27bc-4540-8ec3-bcb7cddf7ccc" />
+
+
 
 **Disclaimer**: This application is for educational purposes only. Stock prices and financial data are indicative and should not be used for actual investment decisions. Always consult with financial advisors and verify data with official sources before making investment decisions.
