@@ -288,11 +288,11 @@ YAHOO_FINANCE_API_KEY=your_key_here
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📄 License
+##  License
 
 This project is for educational and demonstration purposes. Please ensure compliance with data provider terms of service when using real APIs.
 
-## 🆘 Support
+##  Support
 
 For support and questions:
 - Check the GitHub issues
