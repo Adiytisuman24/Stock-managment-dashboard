@@ -50,14 +50,14 @@ export default function SectorAnalysis({
     );
   };
 
-  // Separate recommendations by performance
+  
   const topPerformers = stockRecommendations.filter(stock => stock.gainPercent > 20);
   const moderatePerformers = stockRecommendations.filter(stock => stock.gainPercent >= 0 && stock.gainPercent <= 20);
   const underPerformers = stockRecommendations.filter(stock => stock.gainPercent < 0);
 
   return (
     <div className="space-y-8">
-      {/* Sector Summary Table */}
+      
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
@@ -126,7 +126,6 @@ export default function SectorAnalysis({
         </CardContent>
       </Card>
 
-      {/* Top Performers */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-green-600">
@@ -162,7 +161,7 @@ export default function SectorAnalysis({
         </CardContent>
       </Card>
 
-      {/* Moderate Performers */}
+     
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-blue-600">
@@ -196,7 +195,7 @@ export default function SectorAnalysis({
         </CardContent>
       </Card>
 
-      {/* Under Performers */}
+      
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-red-600">
@@ -230,7 +229,7 @@ export default function SectorAnalysis({
         </CardContent>
       </Card>
 
-      {/* Sector Allocation Recommendations */}
+     
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
