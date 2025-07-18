@@ -37,16 +37,16 @@ export interface GoogleFinanceResponse {
   };
 }
 
-// Stock symbol mappings for Indian stocks
+
 const STOCK_SYMBOL_MAPPINGS: { [key: string]: string } = {
-  // Financial Sector
+  
   'HDFCBANK.NS': 'HDFCBANK:NSE',
   'BAJFINANCE.NS': 'BAJFINANCE:NSE',
   'ICICIBANK.NS': 'ICICIBANK:NSE',
   'BAJAJ-AUTO.NS': 'BAJAJ-AUTO:NSE',
   'SAVANIFIN.NS': 'SAVANIFIN:NSE',
   
-  // Tech Sector
+  
   'AFFLE.NS': 'AFFLE:NSE',
   'LTIM.NS': 'LTIM:NSE',
   'KPITTECH.NS': 'KPITTECH:NSE',
@@ -54,23 +54,23 @@ const STOCK_SYMBOL_MAPPINGS: { [key: string]: string } = {
   'BLSE.NS': 'BLSE:NSE',
   'TANLA.NS': 'TANLA:NSE',
   
-  // Consumer
+
   'DMART.NS': 'DMART:NSE',
   'TATACONSUM.NS': 'TATACONSUM:NSE',
   'PIDILITE.NS': 'PIDILITE:NSE',
   
-  // Power
+  
   'TATAPOWER.NS': 'TATAPOWER:NSE',
   'KPIGREEN.NS': 'KPIGREEN:NSE',
   'SUZLON.NS': 'SUZLON:NSE',
   'GENSOL.NS': 'GENSOL:NSE',
   
-  // Pipe Sector
+  
   'HARIOMPIPE.NS': 'HARIOMPIPE:NSE',
   'ASTRAL.NS': 'ASTRAL:NSE',
   'POLYCAB.NS': 'POLYCAB:NSE',
   
-  // Others
+ 
   'CLEANSCI.NS': 'CLEANSCI:NSE',
   'DEEPAKNTR.NS': 'DEEPAKNTR:NSE',
   'FINEORG.NS': 'FINEORG:NSE',
@@ -84,14 +84,14 @@ const STOCK_SYMBOL_MAPPINGS: { [key: string]: string } = {
 export class SerpApiClient {
   private apiKey: string;
   private cache: Map<string, { data: SerpApiStockData; timestamp: number }> = new Map();
-  private readonly CACHE_DURATION = 15000; // 15 seconds
+  private readonly CACHE_DURATION = 15000;
 
   constructor(apiKey: string) {
     this.apiKey = apiKey;
   }
 
   async fetchStockData(symbol: string): Promise<SerpApiStockData | null> {
-    // Check cache first
+    
     const cached = this.cache.get(symbol);
     if (cached && Date.now() - cached.timestamp < this.CACHE_DURATION) {
       return cached.data;
@@ -117,7 +117,7 @@ export class SerpApiClient {
       const stockData = this.parseGoogleFinanceResponse(symbol, response);
       
       if (stockData) {
-        // Cache the result
+        
         this.cache.set(symbol, {
           data: stockData,
           timestamp: Date.now()
@@ -134,7 +134,7 @@ export class SerpApiClient {
   async fetchMultipleStocks(symbols: string[]): Promise<Map<string, SerpApiStockData>> {
     const results = new Map<string, SerpApiStockData>();
     
-    // Process stocks in batches to avoid rate limiting
+   
     const batchSize = 3;
     for (let i = 0; i < symbols.length; i += batchSize) {
       const batch = symbols.slice(i, i + batchSize);
@@ -144,13 +144,13 @@ export class SerpApiClient {
         if (data) {
           results.set(symbol, data);
         }
-        // Add delay between requests to respect rate limits
+       
         await new Promise(resolve => setTimeout(resolve, 300));
       });
 
       await Promise.all(promises);
       
-      // Add delay between batches
+      
       if (i + batchSize < symbols.length) {
         await new Promise(resolve => setTimeout(resolve, 1000));
       }
@@ -161,7 +161,7 @@ export class SerpApiClient {
 
   private parseGoogleFinanceResponse(symbol: string, response: GoogleFinanceResponse): SerpApiStockData | null {
     try {
-      // Try to get data from knowledge_graph first, then summary
+      
       const data = response.knowledge_graph || response.summary;
       const financials = response.financials;
 
@@ -190,7 +190,7 @@ export class SerpApiClient {
     }
   }
 
-  // Get cached data for immediate response
+  
   getCachedData(symbol: string): SerpApiStockData | null {
     const cached = this.cache.get(symbol);
     if (cached && Date.now() - cached.timestamp < this.CACHE_DURATION * 2) {
@@ -199,13 +199,13 @@ export class SerpApiClient {
     return null;
   }
 
-  // Clear cache
+  
   clearCache(): void {
     this.cache.clear();
   }
 }
 
-// Singleton instance
+
 let serpApiClient: SerpApiClient | null = null;
 
 export function getSerpApiClient(): SerpApiClient {
@@ -216,7 +216,7 @@ export function getSerpApiClient(): SerpApiClient {
   return serpApiClient;
 }
 
-// Enhanced fallback data with more realistic variations
+
 export function getFallbackStockData(symbol: string): SerpApiStockData {
   const basePrices: { [key: string]: number } = {
     'HDFCBANK.NS': 1770,
@@ -252,22 +252,22 @@ export function getFallbackStockData(symbol: string): SerpApiStockData {
 
   const basePrice = basePrices[symbol] || 1000;
   
-  // Create more realistic price movements
-  const volatility = 0.03; // 3% volatility
-  const trend = (Math.random() - 0.5) * 0.02; // Small trend component
+  
+  const volatility = 0.03; 
+  const trend = (Math.random() - 0.5) * 0.02; 
   const randomComponent = (Math.random() - 0.5) * volatility;
   
   const priceChange = basePrice * (trend + randomComponent);
-  const newPrice = Math.max(basePrice + priceChange, basePrice * 0.5); // Prevent negative prices
+  const newPrice = Math.max(basePrice + priceChange, basePrice * 0.5); 
   const change = newPrice - basePrice;
   const changePercent = (change / basePrice) * 100;
 
-  // Generate realistic P/E ratios based on sector
+  
   let peRatio = 15 + Math.random() * 25;
   if (symbol.includes('TECH') || symbol.includes('INFY') || symbol.includes('LTIM')) {
-    peRatio = 20 + Math.random() * 15; // Tech stocks typically higher P/E
+    peRatio = 20 + Math.random() * 15; 
   } else if (symbol.includes('BANK') || symbol.includes('FINANCE')) {
-    peRatio = 10 + Math.random() * 15; // Financial stocks typically lower P/E
+    peRatio = 10 + Math.random() * 15; 
   }
 
   return {
