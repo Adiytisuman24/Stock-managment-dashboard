@@ -138,7 +138,7 @@ export default function PortfolioTable({ stocks, loading }: PortfolioTableProps)
           </Select>
         </div>
 
-        {/* Table */}
+       
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
