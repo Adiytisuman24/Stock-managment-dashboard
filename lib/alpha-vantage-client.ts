@@ -68,8 +68,8 @@ export class AlphaVantageClient {
   private apiKey: string;
   private baseUrl = 'https://www.alphavantage.co/query';
   private cache: Map<string, { data: any; timestamp: number }> = new Map();
-  private readonly CACHE_DURATION = 60000; // 1 minute cache
-  private readonly RATE_LIMIT_DELAY = 12000; // 12 seconds between requests (5 requests per minute)
+  private readonly CACHE_DURATION = 60000; 
+  private readonly RATE_LIMIT_DELAY = 12000; 
   private lastRequestTime = 0;
 
   constructor(apiKey: string) {
@@ -117,7 +117,7 @@ export class AlphaVantageClient {
   }
 
   async getQuote(symbol: string): Promise<AlphaVantageQuote | null> {
-    // Check cache first
+    
     const cacheKey = `quote_${symbol}`;
     const cached = this.cache.get(cacheKey);
     if (cached && Date.now() - cached.timestamp < this.CACHE_DURATION) {
@@ -125,7 +125,7 @@ export class AlphaVantageClient {
     }
 
     try {
-      // Convert NSE symbols to Alpha Vantage format
+      
       const alphaSymbol = this.convertToAlphaVantageSymbol(symbol);
       
       const data = await this.makeRequest({
@@ -149,7 +149,7 @@ export class AlphaVantageClient {
         lastUpdated: quote['07. latest trading day'] || new Date().toISOString()
       };
 
-      // Cache the result
+  
       this.cache.set(cacheKey, {
         data: result,
         timestamp: Date.now()
@@ -163,10 +163,10 @@ export class AlphaVantageClient {
   }
 
   async getCompanyOverview(symbol: string): Promise<AlphaVantageOverview | null> {
-    // Check cache first
+  
     const cacheKey = `overview_${symbol}`;
     const cached = this.cache.get(cacheKey);
-    if (cached && Date.now() - cached.timestamp < this.CACHE_DURATION * 5) { // 5 minute cache for overview
+    if (cached && Date.now() - cached.timestamp < this.CACHE_DURATION * 5) { 
       return cached.data;
     }
 
@@ -231,7 +231,7 @@ export class AlphaVantageClient {
         lastSplitDate: data['LastSplitDate'] || ''
       };
 
-      // Cache the result
+      
       this.cache.set(cacheKey, {
         data: result,
         timestamp: Date.now()
@@ -247,7 +247,7 @@ export class AlphaVantageClient {
   async getMultipleQuotes(symbols: string[]): Promise<Map<string, AlphaVantageQuote>> {
     const results = new Map<string, AlphaVantageQuote>();
     
-    // Process symbols in batches to respect rate limits
+   
     for (const symbol of symbols) {
       try {
         const quote = await this.getQuote(symbol);
@@ -263,16 +263,14 @@ export class AlphaVantageClient {
   }
 
   private convertToAlphaVantageSymbol(symbol: string): string {
-    // Convert NSE symbols to Alpha Vantage format
-    // For Indian stocks, Alpha Vantage might use different formats
-    // This is a basic conversion - you might need to adjust based on actual API responses
+  
     if (symbol.endsWith('.NS')) {
-      return symbol.replace('.NS', '.BSE'); // Try BSE format first
+      return symbol.replace('.NS', '.BSE');
     }
     return symbol;
   }
 
-  // Generate fallback data when API fails
+ 
   generateFallbackData(symbol: string): AlphaVantageQuote {
     const basePrices: { [key: string]: number } = {
       'HDFCBANK.NS': 1770,
@@ -333,7 +331,7 @@ export class AlphaVantageClient {
   }
 }
 
-// Singleton instance
+
 let alphaVantageClient: AlphaVantageClient | null = null;
 
 export function getAlphaVantageClient(): AlphaVantageClient {
